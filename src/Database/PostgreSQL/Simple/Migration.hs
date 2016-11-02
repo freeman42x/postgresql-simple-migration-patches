@@ -52,7 +52,7 @@ import           Data.List                          (isPrefixOf, sort)
 #if __GLASGOW_HASKELL__ < 710
 import           Data.Monoid                        (Monoid (..))
 #endif
-import           Data.Time                          (LocalTime)
+import           Data.Time                          (UTCTime)
 import           Database.PostgreSQL.Simple         (Connection, Only (..),
                                                      execute, execute_, query,
                                                      query_)
@@ -157,7 +157,7 @@ initializeSchema con verbose = do
         [ "create table if not exists schema_migrations "
         , "( filename varchar(512) not null"
         , ", checksum varchar(32) not null"
-        , ", executed_at timestamp without time zone not null default now() "
+        , ", executed_at timestamp with time zone not null default now() "
         , ");"
         ]
 
@@ -306,8 +306,8 @@ data SchemaMigration = SchemaMigration
     -- ^ The name of the executed migration.
     , schemaMigrationChecksum   :: Checksum
     -- ^ The calculated MD5 checksum of the executed script.
-    , schemaMigrationExecutedAt :: LocalTime
-    -- ^ A timestamp without timezone of the date of execution of the script.
+    , schemaMigrationExecutedAt :: UTCTime
+    -- ^ A timestamp with timezone of the date of execution of the script.
     } deriving (Show, Eq, Read)
 
 instance Ord SchemaMigration where
