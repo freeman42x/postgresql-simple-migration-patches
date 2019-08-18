@@ -2,6 +2,10 @@ resolver: lts-10.0
 packages:
     - '.'
 
+extra-deps:
+  - git: https://github.com/razvan-panda/postgresql-simple-migration.git
+    commit: 9cd59706b5a9c382d010c479725d0f67f6e574c1
+
 nix:
   enable: true
   pure: false

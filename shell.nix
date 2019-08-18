@@ -6,7 +6,7 @@ let
 
   f = { mkDerivation, base, base64-bytestring, bytestring
       , cryptohash, directory, hspec, postgresql-simple, safe-exceptions
-      , stdenv, text, time
+      , stdenv, text, time, postgresql
       }:
       mkDerivation {
         pname = "postgresql-simple-migration";
@@ -16,7 +16,7 @@ let
         isExecutable = true;
         libraryHaskellDepends = [
           base base64-bytestring bytestring cryptohash directory
-          postgresql-simple safe-exceptions time
+          postgresql-simple safe-exceptions time postgresql
         ];
         executableHaskellDepends = [
           base base64-bytestring bytestring cryptohash directory
