@@ -1,4 +1,4 @@
-# PostgreSQL Migrations for Haskell
+# PostgreSQL Migrations for Haskell (clone of https://gitlab.com/snowdrift/postgresql-simple-migration-patches.git)
 
 [![Build Status](https://api.travis-ci.org/ameingast/postgresql-simple-migration.png)](https://travis-ci.org/ameingast/postgresql-simple-migration)
 
