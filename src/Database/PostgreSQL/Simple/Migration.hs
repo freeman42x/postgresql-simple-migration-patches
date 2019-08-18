@@ -61,6 +61,7 @@ import           Database.PostgreSQL.Simple.ToField (ToField (..))
 import           Database.PostgreSQL.Simple.ToRow   (ToRow (..))
 import           Database.PostgreSQL.Simple.Types   (Query (..))
 import           Database.PostgreSQL.Simple.Util    (existsTable)
+import           Data.Semigroup                     (Semigroup)
 import           System.Directory                   (getDirectoryContents)
 
 -- | Executes migrations inside the provided 'MigrationContext'.
@@ -257,10 +258,12 @@ data MigrationCommand
 
 instance Monoid MigrationCommand where
     mempty = MigrationCommands []
-    mappend (MigrationCommands xs) (MigrationCommands ys) = MigrationCommands (xs ++ ys)
-    mappend (MigrationCommands xs) y = MigrationCommands (xs ++ [y])
-    mappend x (MigrationCommands ys) = MigrationCommands (x : ys)
-    mappend x y = MigrationCommands [x, y]
+
+instance Semigroup MigrationCommand where
+    (MigrationCommands xs) <> (MigrationCommands ys) = MigrationCommands (xs ++ ys)
+    (MigrationCommands xs) <> y                      = MigrationCommands (xs ++ [y])
+    x                      <> (MigrationCommands ys) = MigrationCommands (x : ys)
+    x                      <> y                      = MigrationCommands [x, y]
 
 -- | A sum-type denoting the result of a single migration.
 data CheckScriptResult
